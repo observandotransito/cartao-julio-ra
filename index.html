@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#151310">
+<meta name="description" content="Cartão digital de Julio Augusto Ferreira, Sócio-Diretor da Observando o Trânsito. Acesse o site, salve o contato e veja a marca em realidade aumentada.">
+<title>Julio Augusto Ferreira | Observando o Trânsito</title>
+<script type="module" src="https://unpkg.com/@google/model-viewer@4.1.0/dist/model-viewer.min.js"></script>
+<style>
+:root{color-scheme:dark;--gold:#e9c477;--muted:#c0b8aa;--bg:#151310}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#35291b 0, var(--bg) 60%);color:#f7f1e6;font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100svh}main{width:min(100% - 40px,520px);margin:auto;padding:34px 0 30px}.eyebrow{text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--gold);text-align:center;margin:0 0 20px}.brand{display:block;width:100%;height:auto;border-radius:18px;border:1px solid #94703b55;box-shadow:0 20px 70px #0005}header{text-align:center;margin:27px 0 25px}h1{font-family:Georgia,serif;font-size:clamp(28px,7vw,36px);font-weight:400;line-height:1.15;letter-spacing:-.03em;margin:0 0 8px}header p{margin:0;color:var(--gold);font-size:14px}.company{color:var(--muted);font-size:13px;margin-top:5px}nav{display:grid;gap:11px}a.button,button.ar{display:flex;justify-content:center;align-items:center;min-height:54px;padding:13px 18px;border-radius:10px;font:600 15px/1.4 system-ui;text-decoration:none;cursor:pointer}a.primary{background:var(--gold);color:#211b11;border:1px solid var(--gold)}a.secondary{border:1px solid #b799605f;color:#f7e6c2;background:#211c15}a:hover,button:hover{filter:brightness(1.12)}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid white;outline-offset:4px}.details{display:grid;gap:6px;text-align:center;margin:24px 0}.details a{color:var(--muted);text-decoration:none;font-size:14px;overflow-wrap:anywhere}.details a:hover{text-decoration:underline}.ar-section{border-top:1px solid #b7996033;padding-top:22px;margin-top:26px}summary{cursor:pointer;color:var(--gold);font-size:14px;text-align:center;padding:5px}summary::marker{color:var(--gold)}.hint{font-size:12px;line-height:1.6;color:var(--muted);text-align:center;margin:14px 15px}model-viewer{width:100%;height:300px;margin-top:12px;background:#1c1813;border-radius:12px;--progress-bar-color:var(--gold)}button.ar{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);white-space:nowrap;color:#211b11;background:var(--gold);border:0;min-height:44px;font-size:13px}#status{color:var(--muted);font-size:12px;text-align:center}footer{text-align:center;color:#938979;font-size:11px;margin-top:30px;letter-spacing:.06em}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}@media(min-width:700px){main{padding-top:45px}}
+</style>
+</head>
+<body><main>
+<p class="eyebrow">Conecte-se com a Observando o Trânsito</p>
+<img class="brand" src="logotipo-original.png" width="2048" height="1364" alt="Logotipo dourado original da Observando o Trânsito — Engenharia de Trânsito e Transportes">
+<header><h1>Julio Augusto Ferreira</h1><p>Sócio-Diretor</p><div class="company">Observando o Trânsito</div></header>
+<nav aria-label="Ações principais"><a class="button primary" href="https://www.observandotransito.com.br" target="_blank" rel="noopener noreferrer">Acessar o site <span aria-hidden="true">&nbsp;↗</span></a><a class="button secondary" href="julio-augusto-ferreira.vcf" download="Julio-Augusto-Ferreira.vcf">Salvar contato na agenda <span aria-hidden="true">&nbsp;↓</span></a></nav>
+<div class="details"><a href="tel:+5511986505522">(11) 98650-5522</a><a href="mailto:contato@observandotransito.com.br">contato@observandotransito.com.br</a></div>
+<details class="ar-section" open><summary>Ver a marca em realidade aumentada</summary>
+<p class="hint">Leve a marca para o seu ambiente. Em um celular compatível, toque em “Ver no meu ambiente” e permita o uso da câmera.</p>
+<model-viewer id="marca" src="marca-ra.glb" poster="logotipo-original.png" alt="Painel com a imagem original da Observando o Trânsito, para visualizar no ambiente" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto" camera-controls camera-orbit="0deg 90deg 0.5m" min-camera-orbit="auto auto 0.25m" max-camera-orbit="auto auto 1.5m" shadow-intensity="0.6" interaction-prompt="none" touch-action="pan-y">
+<button class="ar" slot="ar-button">Ver no meu ambiente</button>
+</model-viewer>
+<p id="status" role="status">Carregando a visualização…</p>
+<p class="hint">No iPhone, use o Safari. No Android, use o Chrome com suporte a RA. Se a opção de câmera não aparecer, você ainda pode girar o painel acima. Para acessar o site ou salvar o contato, volte a esta página.</p>
+</details>
+<footer>OBSERVANDO O TRÂNSITO · CARTÃO DIGITAL</footer>
+</main>
+<script>
+const viewer=document.querySelector('#marca'),status=document.querySelector('#status');
+viewer.addEventListener('load',()=>{status.textContent=viewer.canActivateAR?'Pronto. Toque em “Ver no meu ambiente” para iniciar.':'Visualização disponível. A realidade aumentada depende do celular e do navegador.'});
+viewer.addEventListener('error',()=>{status.textContent='A visualização não carregou. Verifique a conexão e atualize a página. Os botões do cartão continuam disponíveis.'});
+viewer.addEventListener('ar-status',event=>{if(event.detail.status==='failed')status.textContent='Não foi possível iniciar a realidade aumentada. Tente abrir este cartão diretamente no Safari ou Chrome.'});
+setTimeout(()=>{if(!customElements.get('model-viewer'))status.textContent='A visualização depende de conexão com a internet. Os botões do cartão continuam disponíveis.'},15000);
+</script></body></html>
