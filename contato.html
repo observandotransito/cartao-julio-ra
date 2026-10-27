@@ -1,0 +1,20 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#151310"><title>Salvar contato | Julio Augusto Ferreira</title>
+<style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#151310;color:#f7f1e6;font:16px/1.55 system-ui,sans-serif}main{max-width:470px;margin:30px auto;padding:20px}h1{font:32px/1.2 Georgia,serif;color:#e9c477}p{color:#c0b8aa;font-size:14px}label{display:block;font-size:13px;color:#e9c477;margin:14px 0 5px}input{width:100%;padding:13px;border:1px solid #b799605f;border-radius:8px;background:#211c15;color:#fff;font:16px system-ui}button,.button{display:block;width:100%;text-align:center;padding:15px;margin-top:14px;border:0;border-radius:9px;background:#e9c477;color:#211b11;text-decoration:none;font:600 15px system-ui;cursor:pointer}.secondary{background:transparent;color:#e9c477;border:1px solid #b799605f}a{color:#e9c477}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid white;outline-offset:3px}small{display:block;color:#c0b8aa;margin-top:16px}</style></head>
+<body><main><a href="./">← Voltar ao cartão</a><h1>Vamos nos conectar</h1><p>Confira os dados e ajuste algum campo, se precisar. Depois, abra o contato no seu celular para confirmar o salvamento.</p>
+<form id="contact-form"><label for="name">Nome</label><input id="name" name="name" value="Julio Augusto Ferreira" required autocomplete="off"><label for="company">Empresa</label><input id="company" name="company" value="Observando o Trânsito" autocomplete="off"><label for="title">Cargo</label><input id="title" name="title" value="Sócio-Diretor" autocomplete="off"><label for="phone">Celular</label><input id="phone" name="phone" value="+55 11 98650-5522" type="tel" autocomplete="off"><label for="email">E-mail</label><input id="email" name="email" value="contato@observandotransito.com.br" type="email" autocomplete="off"><label for="website">Site</label><input id="website" name="website" value="https://www.observandotransito.com.br" type="url" autocomplete="off"><button type="submit">Abrir contato no celular</button></form>
+<p id="message" role="status">Se o Android tiver baixado um arquivo, toque nele e escolha Contatos para importar. Alguns aparelhos permitem editar depois de adicionar.</p>
+<a class="button secondary" id="download" href="julio-augusto-ferreira.vcf">Abrir arquivo de contato</a><small>Os campos são preparados apenas neste navegador. Nenhum dado editado é enviado para um servidor.</small>
+<script>
+const form=document.querySelector('form'),link=document.querySelector('#download'),message=document.querySelector('#message');let previousUrl;
+const esc=value=>value.replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/;/g,'\\;').replace(/,/g,'\\,');
+form.addEventListener('submit',async event=>{
+ event.preventDefault();const data=Object.fromEntries(new FormData(form));
+ const text=['BEGIN:VCARD','VERSION:3.0','FN:'+esc(data.name),'N:;'+esc(data.name)+';;;','ORG:'+esc(data.company),'TITLE:'+esc(data.title),'TEL;TYPE=CELL:'+esc(data.phone),'EMAIL;TYPE=INTERNET,WORK:'+esc(data.email),'URL:'+esc(data.website),'END:VCARD',''].join('\r\n');
+ const file=new File([text],'Julio-Augusto-Ferreira.vcf',{type:'text/vcard'});
+ if(previousUrl)URL.revokeObjectURL(previousUrl);previousUrl=URL.createObjectURL(file);link.href=previousUrl;link.download='Julio-Augusto-Ferreira.vcf';link.textContent='Abrir arquivo com os dados revisados';
+ if(navigator.canShare&&navigator.canShare({files:[file]})){
+  try{await navigator.share({files:[file],title:data.name});message.textContent='Se Contatos aparecer entre as opções, escolha esse aplicativo e confirme o salvamento.';return}catch(error){if(error.name==='AbortError'){message.textContent='Você pode tentar novamente ou abrir o arquivo abaixo.';return}}
+ }
+ link.click();message.textContent='Toque no arquivo de contato que abriu ou foi baixado e escolha Contatos. Confira os dados e confirme a importação.';
+});
+</script></main></body></html>

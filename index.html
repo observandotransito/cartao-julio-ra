@@ -14,22 +14,31 @@
 <p class="eyebrow">Conecte-se com a Observando o Trânsito</p>
 <img class="brand" src="logotipo-original.png" width="2048" height="1364" alt="Logotipo dourado original da Observando o Trânsito — Engenharia de Trânsito e Transportes">
 <header><h1>Julio Augusto Ferreira</h1><p>Sócio-Diretor</p><div class="company">Observando o Trânsito</div></header>
-<nav aria-label="Ações principais"><a class="button primary" href="https://www.observandotransito.com.br" target="_blank" rel="noopener noreferrer">Acessar o site <span aria-hidden="true">&nbsp;↗</span></a><a class="button secondary" href="julio-augusto-ferreira.vcf" download="Julio-Augusto-Ferreira.vcf">Salvar contato na agenda <span aria-hidden="true">&nbsp;↓</span></a></nav>
+<nav aria-label="Ações principais"><a class="button primary" href="https://www.observandotransito.com.br" target="_blank" rel="noopener noreferrer">Acessar o site <span aria-hidden="true">&nbsp;↗</span></a><a id="salvar-contato" class="button secondary" href="contato.html">Salvar contato na agenda <span aria-hidden="true">&nbsp;＋</span></a></nav>
 <div class="details"><a href="tel:+5511986505522">(11) 98650-5522</a><a href="mailto:contato@observandotransito.com.br">contato@observandotransito.com.br</a></div>
-<details class="ar-section" open><summary>Ver a marca em realidade aumentada</summary>
-<p class="hint">Leve a marca para o seu ambiente. Em um celular compatível, toque em “Ver no meu ambiente” e permita o uso da câmera.</p>
-<model-viewer id="marca" src="marca-ra.glb" poster="logotipo-original.png" alt="Painel com a imagem original da Observando o Trânsito, para visualizar no ambiente" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto" camera-controls camera-orbit="0deg 90deg 0.5m" min-camera-orbit="auto auto 0.25m" max-camera-orbit="auto auto 1.5m" shadow-intensity="0.6" interaction-prompt="none" touch-action="pan-y">
+<details class="ar-section" open><summary>Uma cidade em movimento, no seu ambiente</summary>
+<p class="hint">Uma pequena cidade ganha vida sobre a sua mesa: carros circulando, semáforos e caminhos dourados. Arraste para explorar ou toque em “Ver no meu ambiente”.</p>
+<model-viewer id="marca" src="cidade-ra.glb" alt="Cidade em miniatura com edifícios, jardins, faixas de pedestres, quatro carros em movimento, semáforos e painel com o logotipo original da Observando o Trânsito" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto" autoplay camera-controls camera-orbit="25deg 55deg 1.25m" min-camera-orbit="auto 15deg 0.4m" max-camera-orbit="auto 85deg 2.5m" shadow-intensity="0.8" exposure="1.1" interaction-prompt="none" touch-action="pan-y" loading="eager">
 <button class="ar" slot="ar-button">Ver no meu ambiente</button>
 </model-viewer>
 <p id="status" role="status">Carregando a visualização…</p>
-<p class="hint">No iPhone, use o Safari. No Android, use o Chrome com suporte a RA. Se a opção de câmera não aparecer, você ainda pode girar o painel acima. Para acessar o site ou salvar o contato, volte a esta página.</p>
+<button type="button" id="animation-toggle" style="display:block;margin:12px auto;background:transparent;border:1px solid #b799605f;border-radius:8px;padding:10px 18px;color:#e9c477;cursor:pointer" aria-pressed="false">Pausar movimento</button>
+<p class="hint">No Android, abra no Chrome. A animação na câmera depende do modo de RA disponível; alguns visualizadores mostram a cidade parada. No iPhone, use o Safari. Volte a esta página para acessar o site ou salvar o contato.</p>
 </details>
 <footer>OBSERVANDO O TRÂNSITO · CARTÃO DIGITAL</footer>
 </main>
 <script>
 const viewer=document.querySelector('#marca'),status=document.querySelector('#status');
+const toggle=document.querySelector('#animation-toggle');
+toggle.addEventListener('click',()=>{const paused=viewer.paused;if(paused)viewer.play();else viewer.pause();toggle.textContent=paused?'Pausar movimento':'Continuar movimento';toggle.setAttribute('aria-pressed',String(!paused))});
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){viewer.removeAttribute('autoplay');toggle.textContent='Continuar movimento';toggle.setAttribute('aria-pressed','true')}
 viewer.addEventListener('load',()=>{status.textContent=viewer.canActivateAR?'Pronto. Toque em “Ver no meu ambiente” para iniciar.':'Visualização disponível. A realidade aumentada depende do celular e do navegador.'});
 viewer.addEventListener('error',()=>{status.textContent='A visualização não carregou. Verifique a conexão e atualize a página. Os botões do cartão continuam disponíveis.'});
 viewer.addEventListener('ar-status',event=>{if(event.detail.status==='failed')status.textContent='Não foi possível iniciar a realidade aumentada. Tente abrir este cartão diretamente no Safari ou Chrome.'});
 setTimeout(()=>{if(!customElements.get('model-viewer'))status.textContent='A visualização depende de conexão com a internet. Os botões do cartão continuam disponíveis.'},15000);
+if(/Android/i.test(navigator.userAgent)){
+ const fallback=new URL('contato.html',location.href).href;
+ const fields={name:'Julio Augusto Ferreira',phone:'+5511986505522',email:'contato@observandotransito.com.br',company:'Observando o Trânsito',job_title:'Sócio-Diretor',notes:'Site: https://www.observandotransito.com.br',browser_fallback_url:fallback};
+ document.querySelector('#salvar-contato').href='intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.dir/contact;'+Object.entries(fields).map(([key,value])=>'S.'+key+'='+encodeURIComponent(value)+';').join('')+'end';
+}
 </script></body></html>
